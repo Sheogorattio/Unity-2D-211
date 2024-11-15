@@ -21,7 +21,7 @@ public class HwBirdScript : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space)){
             slingshot.enabled = false;
-            rb2d.AddForce(arrow.right * 800);
+            rb2d.AddForce(arrow.right * 1200);
         }
     }
 }
