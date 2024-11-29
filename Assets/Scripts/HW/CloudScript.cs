@@ -13,7 +13,7 @@ public class CloudScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.Translate(Vector2.left * 0.01f);
+        this.transform.Translate(Vector2.left * Time.deltaTime);
         if(this.transform.position.x < -10.0f)
         {
             this.transform.position = new Vector3(10f, this.transform.position.y);

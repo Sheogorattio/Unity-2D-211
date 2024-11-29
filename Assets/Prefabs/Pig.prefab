@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 712770796099013008}
   - component: {fileID: 7266972369073504188}
   - component: {fileID: 3517856409103363527}
+  - component: {fileID: 5445114093817162442}
   - component: {fileID: 3233438280572614980}
   - component: {fileID: 3152057784686844607}
   - component: {fileID: 43930033162387311}
   m_Layer: 0
   m_Name: Sp
-  m_TagString: Untagged
+  m_TagString: Pig
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 7290172781852029621}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.564, y: -0.396, z: 0}
+  m_LocalPosition: {x: 5.63, y: 0.06, z: 0}
   m_LocalScale: {x: 0.08364756, y: 0.08364756, z: 0.08364756}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -151,6 +152,18 @@ CapsuleCollider2D:
   m_Offset: {x: -0.034737915, y: -1.4819553}
   m_Size: {x: 18.042667, y: 14.607687}
   m_Direction: 1
+--- !u!114 &5445114093817162442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7290172781852029621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d8e11483e43934c9f75f6dad484aa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!58 &3233438280572614980
 CircleCollider2D:
   m_ObjectHideFlags: 0

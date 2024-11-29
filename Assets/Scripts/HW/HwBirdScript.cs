@@ -37,6 +37,7 @@ public class HwBirdScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Time.timeScale == 0.0f) return;
         if(Input.GetKeyDown(KeyCode.Space) && isReady){
             accelerationsCounter++;
             if (accelerationsCounter == maxAccelerations)
@@ -46,7 +47,7 @@ public class HwBirdScript : MonoBehaviour
             slingshotCollider.enabled = false;
            
             if(forceScript != null){
-                basicAccelerationSpeed *= forceScript.forceFactor + 0.5f;
+                basicAccelerationSpeed *= Time.timeScale * forceScript.forceFactor + 0.5f;
             } 
             else{
                 Debug.LogError("forceScript NULL, used default");
@@ -54,5 +55,6 @@ public class HwBirdScript : MonoBehaviour
             rb2d.AddForce(arrow.right * basicAccelerationSpeed);
             //slingshotCollider.enabled = true;
         }
+
     }
 }
