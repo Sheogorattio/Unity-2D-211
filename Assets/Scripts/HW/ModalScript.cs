@@ -18,6 +18,8 @@ public class ModalScript : MonoBehaviour
     private TMPro.TextMeshProUGUI messageTMP;
     private string titleDefault;
     private string messageDefault;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI resumeButtonText;
     
     // Start is called before the first frame update
     void Start()
@@ -31,10 +33,6 @@ public class ModalScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         if(GameState.isLevelCompleted){
-            GameState.isLevelCompleted = false;
-            ShowModal("Перемога", "Всіх ворогів знищено");           
-        }
         if(Input.GetKeyUp(KeyCode.Escape)){         
             if(modalPanel.activeInHierarchy){
                 modalPanel.SetActive(false);
@@ -44,30 +42,71 @@ public class ModalScript : MonoBehaviour
                 _Show();
             }
         }
-        
+        if(GameState.isFailed){
+            resumeButtonText.text = "Cпочакту";
+        }
+        else if(GameState.isLevelCompleted){
+             resumeButtonText.text = "Перепройти";
+             GameState.isLevelCompleted = false;
+             ShowModal("Перемога", "Всіх ворогів знищено");   
+        }
+        else{
+            resumeButtonText.text = "Продовжити";
+        }
+    }
+
+    private void startAgain(){
+        GameState.isFailed = false;
+            Debug.Log("inside of failed case");
+            SceneManager.LoadScene(0);
+    }
+
+    private void redoLevel(){
+        SceneManager.LoadScene(GameState.levelIndex);
     }
 
     public void OnResumeButtonClick(){
         Time.timeScale = 1.0f ;
 
         if(GameState.isFailed){
-            GameState.isFailed = false;
-            Debug.Log("inside of failed case");
-            SceneManager.LoadScene(0);
+            startAgain();
         }
         else if(GameState.isLevelCompleted){
-             Debug.Log("inside of copleted case");
-            if (GameState.levelIndex == 0)
-                SceneManager.LoadScene( "HW 1" );   
+           redoLevel();  
         }
-        else{
              Debug.Log("inside of enemy destroyed case");
             Time.timeScale = modalPanel.activeInHierarchy? 1.0f : .0f;
             modalPanel.SetActive(! modalPanel.activeInHierarchy);    
-        }
+       
         Debug.Log("OnResumeButtonClick");
         
        
+    }
+
+    public void OnCancelButtonClick(){
+        Time.timeScale= 1.0f;
+        Time.timeScale = modalPanel.activeInHierarchy? 1.0f : .0f;
+            modalPanel.SetActive(! modalPanel.activeInHierarchy);    
+        if(GameState.isFailed){
+            startAgain();
+        }
+        else if(GameState.isLevelCompleted){
+           
+             Debug.Log("inside of copleted case");
+            if (GameState.levelIndex <= 2){
+                GameState.levelIndex++;
+                       
+            }
+            else{
+                GameState.levelIndex =0;
+            }
+            Debug.Log("Level index is: " + GameState.levelIndex);
+            SceneManager.LoadScene(GameState.levelIndex);   
+                
+        }
+             Debug.Log("inside of enemy destroyed case");
+            
+        
     }
 
     public void OnExitButtonClick(){
@@ -76,7 +115,12 @@ public class ModalScript : MonoBehaviour
        Application.Quit();
     }
 
-    private void _Show(string title=null, string message=null){
+    private enum AllowedConuationStatus {
+        ReloadLevel=-1,
+        Continue,
+        Redo
+    }
+    private void _Show(string title=null, string message=null, AllowedConuationStatus status=0){
         Time.timeScale = .0f;
         modalPanel.SetActive(true);
         if(title != null){

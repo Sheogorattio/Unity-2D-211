@@ -5,6 +5,7 @@ using UnityEngine;
 public class HwPigsCountScript : MonoBehaviour
 {
     private TMPro.TextMeshProUGUI pigsCountTM;
+    private int pigsCount =1 ;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +17,7 @@ public class HwPigsCountScript : MonoBehaviour
     void Update()
     {
    
-        int pigsCount =  GameObject.FindGameObjectsWithTag("Pig").Length;
+       pigsCount =  GameObject.FindGameObjectsWithTag("Pig").Length;
         Debug.Log("GameState.isLevelCompleted " +GameState.isLevelCompleted + "\nPigs " + pigsCount + "\nScene index " + GameState.levelIndex);
         if(  GameState.needRecalculatePigs){
             pigsCountTM.text = 
@@ -27,6 +28,7 @@ public class HwPigsCountScript : MonoBehaviour
         if(pigsCount == 0){
             
             GameState.isLevelCompleted = true;
+            pigsCount=1;
         }
     }
 }
